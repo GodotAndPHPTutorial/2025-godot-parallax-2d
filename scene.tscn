@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://co07vv14okp67"]
+[gd_scene load_steps=14 format=3 uid="uid://co07vv14okp67"]
 
 [ext_resource type="Texture2D" uid="uid://bven58pjghn2j" path="res://Images/background.png" id="1_3253y"]
 [ext_resource type="Texture2D" uid="uid://dcyu43b81l5wy" path="res://icon.svg" id="1_ulcgi"]
@@ -7,6 +7,44 @@
 [ext_resource type="Texture2D" uid="uid://bgdmuhh7wpxq7" path="res://Images/cloud.png" id="3_m7jmp"]
 [ext_resource type="Texture2D" uid="uid://ddlsbdolexg88" path="res://Images/tree.png" id="4_y2354"]
 [ext_resource type="Texture2D" uid="uid://bw2hsqdryr632" path="res://Images/bush.png" id="5_ni31j"]
+[ext_resource type="Texture2D" uid="uid://ma06cqqy2l7y" path="res://Images/bird.png" id="6_73fnb"]
+[ext_resource type="Script" uid="uid://q8g1hxwn16ik" path="res://animation_player.gd" id="7_5juve"]
+
+[sub_resource type="Animation" id="Animation_73fnb"]
+resource_name = "fly"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Bird2:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.8, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1232, 246), Vector2(947, 67), Vector2(816, 110), Vector2(146, 71), Vector2(-124, 174)]
+}
+
+[sub_resource type="Animation" id="Animation_5juve"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Bird2:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1232, 246)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_fy5k1"]
+_data = {
+&"RESET": SubResource("Animation_5juve"),
+&"fly": SubResource("Animation_73fnb")
+}
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nxogm"]
 size = Vector2(128, 128)
@@ -77,6 +115,22 @@ z_index = 100
 position = Vector2(713, 282)
 scale = Vector2(20, 20)
 texture = ExtResource("5_ni31j")
+
+[node name="Bird" type="Parallax2D" parent="World/Parallax"]
+z_index = 200
+scroll_scale = Vector2(0, 1)
+
+[node name="Bird2" type="Sprite2D" parent="World/Parallax/Bird"]
+position = Vector2(1232, 246)
+scale = Vector2(10, 10)
+texture = ExtResource("6_73fnb")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="World/Parallax/Bird"]
+libraries = {
+&"": SubResource("AnimationLibrary_fy5k1")
+}
+speed_scale = 0.2
+script = ExtResource("7_5juve")
 
 [node name="Floor" type="StaticBody2D" parent="World"]
 position = Vector2(0, 489)
