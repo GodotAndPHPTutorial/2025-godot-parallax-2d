@@ -1,0 +1,95 @@
+[gd_scene load_steps=9 format=3 uid="uid://co07vv14okp67"]
+
+[ext_resource type="Texture2D" uid="uid://bven58pjghn2j" path="res://Images/background.png" id="1_3253y"]
+[ext_resource type="Texture2D" uid="uid://dcyu43b81l5wy" path="res://icon.svg" id="1_ulcgi"]
+[ext_resource type="PackedScene" uid="uid://djneeon0tpoja" path="res://player.tscn" id="2_nxogm"]
+[ext_resource type="Texture2D" uid="uid://duoo2i7tx0plx" path="res://Images/moutain.png" id="2_u3cyc"]
+[ext_resource type="Texture2D" uid="uid://bgdmuhh7wpxq7" path="res://Images/cloud.png" id="3_m7jmp"]
+[ext_resource type="Texture2D" uid="uid://ddlsbdolexg88" path="res://Images/tree.png" id="4_y2354"]
+[ext_resource type="Texture2D" uid="uid://bw2hsqdryr632" path="res://Images/bush.png" id="5_ni31j"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nxogm"]
+size = Vector2(128, 128)
+
+[node name="Scene" type="Node2D"]
+
+[node name="World" type="Node2D" parent="."]
+
+[node name="Parallax" type="Node2D" parent="World"]
+
+[node name="Background" type="Parallax2D" parent="World/Parallax"]
+z_index = -100
+scroll_scale = Vector2(0, 0)
+repeat_size = Vector2(800, 0)
+repeat_times = 2
+
+[node name="Background" type="Sprite2D" parent="World/Parallax/Background"]
+position = Vector2(371, 333)
+scale = Vector2(100, 100)
+texture = ExtResource("1_3253y")
+
+[node name="Further" type="Parallax2D" parent="World/Parallax"]
+z_index = -80
+scroll_scale = Vector2(0.1, 0)
+repeat_size = Vector2(1000, 0)
+
+[node name="Moutain" type="Sprite2D" parent="World/Parallax/Further"]
+position = Vector2(605, 250)
+scale = Vector2(100, 100)
+texture = ExtResource("2_u3cyc")
+
+[node name="Mid" type="Parallax2D" parent="World/Parallax"]
+z_index = -50
+scroll_scale = Vector2(0.5, 0.1)
+repeat_size = Vector2(150, 0)
+autoscroll = Vector2(-10, 0)
+repeat_times = 8
+
+[node name="Cloud" type="Sprite2D" parent="World/Parallax/Mid"]
+position = Vector2(605, 1.52588e-05)
+scale = Vector2(20, 20)
+texture = ExtResource("3_m7jmp")
+
+[node name="Close" type="Parallax2D" parent="World/Parallax"]
+scroll_scale = Vector2(0.7, 1)
+scroll_offset = Vector2(-1, 0)
+repeat_size = Vector2(800, 0)
+repeat_times = 2
+
+[node name="Tree" type="Sprite2D" parent="World/Parallax/Close"]
+z_index = -30
+position = Vector2(563, 139)
+scale = Vector2(50, 50)
+texture = ExtResource("4_y2354")
+
+[node name="Foreground" type="Parallax2D" parent="World/Parallax"]
+scroll_scale = Vector2(1.2, 1)
+repeat_size = Vector2(1280, 0)
+
+[node name="Bush" type="Sprite2D" parent="World/Parallax/Foreground"]
+z_index = 100
+position = Vector2(541, 282)
+scale = Vector2(20, 20)
+texture = ExtResource("5_ni31j")
+
+[node name="Bush2" type="Sprite2D" parent="World/Parallax/Foreground"]
+z_index = 100
+position = Vector2(713, 282)
+scale = Vector2(20, 20)
+texture = ExtResource("5_ni31j")
+
+[node name="Floor" type="StaticBody2D" parent="World"]
+position = Vector2(0, 489)
+scale = Vector2(50, 2.5)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor"]
+shape = SubResource("RectangleShape2D_nxogm")
+
+[node name="Sprite2D" type="Sprite2D" parent="World/Floor"]
+modulate = Color(0.3, 0.195, 0.075, 1)
+texture = ExtResource("1_ulcgi")
+
+[node name="Player" parent="World" instance=ExtResource("2_nxogm")]
+position = Vector2(541, 250)
+
+[node name="Camera2D" type="Camera2D" parent="World/Player"]
